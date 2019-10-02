@@ -1,0 +1,23 @@
+Datestring:
+2019-02-18T12:08:12.000Z
+
+
+ char string[] = "This is a string of ASCII Characters";
+ char buffer[4*sizeof(string)]; //sized for the worst case scenario of each being in the hundreds plus a space between each and a null
+ char* buffPtr = buffer;
+ 
+ for(byte i = 0; i < sizeof(string) - 1; i++){
+   itoa((int)string[i],buffPtr,10); //convert the next character to a string and store it in the buffer
+   buffPtr += strlen(buffPtr); //move on to the position of the null character
+   *buffPtr = ' '; //replace with a space
+   buffPtr++; //move on ready for next
+ }
+ buffPtr--; //move back a character to where the final space (' ') is
+ *buffPtr = '\0'; //replace it with a null to terminate the string
+ Serial.println(buffer);
+ 
+ 
+ Example : char string[] = "abcd";
+Result : 97 98 99 100
+
+  
