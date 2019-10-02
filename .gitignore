@@ -1,3 +1,4 @@
+# .gitignore file
+
+*.tmp
 *.psd
-Story.txt
-gitpath.txt
