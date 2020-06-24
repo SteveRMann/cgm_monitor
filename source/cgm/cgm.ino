@@ -1,5 +1,5 @@
 #define sketchName "cgm.ino"
-#define sketchVersion "3.00"    // Four characters
+#define sketchVersion "3.10"     // Four characters
 #define hostPrefix "CGM-"       // Six characters max
 
 /*
@@ -30,6 +30,9 @@
     04/23/2020 - Changed LED pin# to match the PCB.
   Version 3.00
     04/24/2020 - Reboot if the time is not updated in 2 minutes.
+  Version 3.10
+    06/24/2020 - Added topic: cgm/cmnd, message: REBOOT to reboot all nodes.
+    
 
 **PROBLEMS**
   I am using millis to test for stale data timeout, but the code also includes the ticker.h library.
@@ -37,7 +40,7 @@
 
   IDE settings:
     NodeMCU 1.0 (ESP-12E Module), 4M, 1M SPIFFS
-    Wemos D1 R1
+    Wemos D1 R1 Mini
 
   The CGM portion of this sketch runs equally on NodeMCU and Wemos D1 Mini.
   The button functions have not been tested on the Wemos and lightly tested on the NodeMCU.
@@ -96,7 +99,7 @@ Ticker staleTicker;                   //Ticker object for the stale ticker flag.
 
 // ****************************** Globals  ******************************
 #define NODENAME "cgm"
-const char *connectName =  NODENAME "-officex";             //Must be unique
+const char *connectName =  NODENAME "-workshop";             //Must be unique
 const char *statusTopic = NODENAME "/status";
 const char *cmndTopic = NODENAME "/cmnd";
 const char *bgTopic = NODENAME "/bg";
@@ -169,10 +172,18 @@ Adafruit_AlphaNum4 timeDisplay = Adafruit_AlphaNum4();
 
 // ************* Initialize the espClient ***********************
 // Initializes the espClient. The espClient name must be unique
-WiFiClient espCGM_officez;
-PubSubClient client(espCGM_officez);
+WiFiClient espCGM_workshop;
+PubSubClient client(espCGM_workshop);
 
-
+/*
+ * /MAC Addresses:
+ * AD C1  Breadboard
+ * 66 8A  Office
+ * A7 5B  MBR
+ * 6E 00  FamilyRoom
+ * F8 EA  (Unknown)
+ * 78 9C  Workshop
+*/
 
 
 
