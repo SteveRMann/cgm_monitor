@@ -15,26 +15,43 @@
 */
 
 void setup_wifi() {
-  byte mac[6];                     //// the MAC address of your Wifi shield
+  byte mac[6];                      //// the MAC address of your Wifi shield
+  int tryCount = 0;                 //Count the attempts to connect
 
   Serial.println(F("\n"));
   Serial.print(F("Connecting to "));
-  Serial.println(my_ssid);
+  Serial.println(MY_SSID);
 
 
   WiFi.mode(WIFI_STA);
-  WiFi.enableInsecureWEP();
-  WiFi.begin(my_ssid, my_password);
+  //WiFi.enableInsecureWEP();
+  WiFi.begin(MY_SSID, MY_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(WiFi.status()); Serial.print(F(" "));
+    tryCount += 1;
+    if (tryCount % 10 == 0)Serial.println();
   }
   Serial.println(F("\nWiFi connected, "));
   Serial.print(F("MAC Address: "));
   Serial.println(WiFi.macAddress());
   Serial.print(F("IP address: "));
   Serial.println(WiFi.localIP());
+  
+  long rssi = WiFi.RSSI();
+  Serial.print("Signal Strength (RSSI):");
+  Serial.println(rssi);
 
+  /* WiFi status codes
+      WL_IDLE_STATUS = 0,
+      WL_NO_SSID_AVAIL = 1,
+      WL_SCAN_COMPLETED = 2,
+      WL_CONNECTED = 3,
+      WL_CONNECT_FAILED = 4,
+      WL_CONNECTION_LOST = 5,
+      WL_WRONG_PASSWORD = 6,
+      WL_DISCONNECTED = 7
+  */
 
   // Get the last three numbers of the mac address.
   // "4C:11:AE:0D:83:86" becomes "0D8386" in macBuffer.

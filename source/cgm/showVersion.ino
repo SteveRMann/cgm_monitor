@@ -2,11 +2,10 @@
 void showVersion() {
   // Shows the firmware version #.
 
-  const char version[] = {sketchVersion};
+  const char version[] = {VERSION};
   int versionChars = sizeof(version) / sizeof(version[0]);
   versionChars = versionChars - 1;                          // Remove one for the line end.
-  const char *dp = ".";
-
+  
   Serial.println(F("__________________"));
   Serial.print(F("version[] = '"));
   Serial.print(version);
